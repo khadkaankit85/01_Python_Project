@@ -22,7 +22,7 @@ class Task:
         self.priority=not_selected
         self.status=unupdated
         with open("taskproject.txt","a") as project_file:
-            project_file.write(self.task,self.description,self.due_date,self.priority,self.status,"\n")
+            project_file.write(f"{self.task}-{self.description}-{self.due_date}-{self.priority}-{self.status}\n")
         
     def task_details(self):
         print(f"{self.task}: {self.description}")
@@ -40,7 +40,18 @@ while True:
  menu()
  selection=input("Enter Your Choice here: ")
  if int(selection)==1:
-     pass
+     print("Task: ")
+     task=input("")
+     print("Description: ")
+     description=input("")
+     print("due_date: ")
+     due_date=input("")
+     print("Priority")
+     priority=input("")
+     print("Status: ")
+     status=input("")
+     task1=Task(task,description,due_date,priority,status)
+     task1.task_details()
  elif int(selection)==2:
      pass
  elif int(selection)==3:
