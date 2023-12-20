@@ -15,6 +15,7 @@ def task_viewer():
                 print("Due Date: ",newline[2])
                 print("Priority: ",newline[3])
                 print("Status: ",newline[4])
+                
             #  for task,description, due_date, priority, status in lines.split("==="):
             #      print(task,":",description)
             #      print(f"Due: {due_date}")

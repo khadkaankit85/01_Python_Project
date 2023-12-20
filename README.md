@@ -24,6 +24,7 @@ Task Filtering:
 
 Provide an option to filter tasks based on status (completed or incomplete).
 Allow users to view tasks that match specific criteria.
+
 Error Handling:
 
 Implement error handling to handle invalid user inputs gracefully.
