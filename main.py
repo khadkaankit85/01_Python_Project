@@ -1,6 +1,5 @@
 # Display a menu with options such as adding a task, viewing tasks, marking tasks as completed, and quitting the application.
 from datetime import date
-
 def menu():
     print("1. Add a Task.")
     print("2. View Tasks.")
@@ -30,9 +29,9 @@ class Task:
         print(f"{self.task}: {self.description}")
         print(f"Due: {self.due_date}" )
         print(f"Status: {self.status}")
+        print()
     
     def task_viewer():
-        global full_list
         with open("taskproject.txt","r") as tasks:
             for lines in tasks.readlines():
                 newline=lines.split("===")
@@ -41,10 +40,11 @@ class Task:
                 print("Due Date: ",newline[2])
                 print("Priority: ",newline[3])
                 print("Status: ",newline[4])
-                tasks_list=[newline[0]]
-            full_list=tasks_list.append(newline[0]) 
-    def ch_status(self):
+                
+    def ch_status():
         global full_list
+
+        full_list=[]
         with open("taskproject.txt","r") as tasks:
             for lines in tasks.readlines():
                 newline=lines.split("===")
@@ -53,47 +53,43 @@ class Task:
                 # print("Due Date: ",newline[2])
                 # print("Priority: ",newline[3])
                 # print("Status: ",newline[4])
-                tasks_list=[newline[0]]
-            full_list=tasks_list.append(newline[0])
+                tasks_list=newline[0]
+                full_list.append(tasks_list)
+        print(full_list)
             
         select_one=input("Change the status of(Task Name): ").lower()
         while select_one not in full_list:
-            select_one=input("Change the status of: ")
+            
             print("Hint: Task should be in the list first('q' to quit)")
+            select_one=input("Change the status of: ")
             if select_one=="q":
                 break
-        if select_one.status=="incomplete":
-            # updated_task=(f"{self.task}==={self.description}==={self.due_date}==={self.priority}===completed\n")
-            with open("taskproject.txt","a") as changing_status:
-                for lines in changing_status.readlines():
-                    splitted=lines.split("===")
-                    for select_one in splitted:
-                        changing_status.pop()
-                        changing_status.append("completed")
-                        print("Status changed to completed:)\n")
-                        
-        elif select_one.status=="completed":
-            # (f"{self.task}==={self.description}==={self.due_date}==={self.priority}===incompleted\n")
-            with open("taskproject.txt","a") as changing_status:
-                for lines in changing_status.readlines():
-                    splitted=lines.split("===")
-                    for select_one in splitted:
-                        changing_status.pop()
-                        changing_status.append("incomplete")
-                        print("Status changed to incomplete:)\n")
-        else:
+        if select_one in full_list:
+            
             new_status=input("Enter the new status for your task: ").lower()
             while new_status not in ["incomplete","completed"]: 
+              print("Hint: enter incomplete or completed")
               new_status=input("Enter the new status for your task: ")
-              print("Hint: enter incomplete or completed")  
-                
-            with open("taskproject.txt","a") as changing_status:
+              
+              
+            # updated_task=(f"{self.task}==={self.description}==={self.due_date}==={self.priority}===completed\n")
+            with open("taskproject.txt","r+") as changing_status:
+        
                 for lines in changing_status.readlines():
                     splitted=lines.split("===")
-                    for select_one in splitted:
+                    if select_one=="q":
+                        break
+                    elif select_one in splitted:
                         splitted.pop()
                         splitted.append(new_status)
-                        print(f"Status changed to {new_status}\n")
+                        print(f"Status changed to {new_status}:)\n")
+                        newTask="===".join(splitted)
+                        changing_status.write(newTask+"\n")
+                        splitted=""
+                        select_one=input("Change the status of(Task Name): ").lower()
+                    
+                
+        
         
     
     
@@ -142,7 +138,7 @@ while True:
      Task.task_viewer()
  
  elif int(selection)==3:
-     pass
+     Task.ch_status()
  
  elif int(selection)==4:
      print("See You Around!!")
